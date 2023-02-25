@@ -29,12 +29,30 @@
 # Должна появиться фраза Privacy mode is disabled for Bot
 # chat_id=message.chat.id       "=id чата, куда пришло сообщение"
 # chat_id=message.from_user.id  "=id чата пользователя, приславшего сообщение"
+# (commands=['картинка'])- команды могут быть написаны и на кириллице
 
 from aiogram import Bot, Dispatcher, executor, types
 from config import TOKEN_API
 
+HELP_COMMAND = """
+<b>/help</b> - <em>основные команды</em>
+<b>/картинка</b> - <em>прислать картинку</em>
+"""
 bot = Bot(TOKEN_API)
 dp = Dispatcher(bot)
+
+
+@dp.message_handler(commands=['help'])
+async def help_command(message: types.Message):
+    """
+    По команде посылает в личку пользователю список основных команд и удаляет сообщение пользователя
+    :param message: /help
+    :return:
+    """
+    await bot.send_message(chat_id=message.from_user.id,
+                           text=HELP_COMMAND,
+                           parse_mode='HTML')
+    await message.delete()
 
 
 @dp.message_handler()
@@ -48,7 +66,8 @@ async def send_hello(message: types.Message):
         в личку пользователю - в любом случае
     """
     # await bot.send_message(chat_id=message.chat.id, text='HELLO')  # =id чата, куда пришло сообщение
-    await bot.send_message(chat_id=message.from_user.id, text='HELLO')  # =id чата пользователя, приславшего сообщение
+    await bot.send_message(chat_id=message.from_user.id,
+                           text='HELLO')  # =id чата пользователя, приславшего сообщение
 
 
 @dp.message_handler()
