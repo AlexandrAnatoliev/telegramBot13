@@ -31,6 +31,8 @@
 # chat_id=message.from_user.id  "=id чата пользователя, приславшего сообщение"
 # (commands=['картинка'])- команды могут быть написаны и на кириллице
 # import os  # позволяет загрузить картинку
+# skip_updates=False - бот обработает сообщения, которые появились в чате за время его бездействия.
+# skip_updates=True - бот проигнорирует сообщения, которые появились в чате за время его бездействия
 
 from aiogram import Bot, Dispatcher, executor, types
 from config import TOKEN_API
@@ -112,4 +114,6 @@ async def echo(message: types.Message):
 
 
 if __name__ == "__main__":
-    executor.start_polling(dp)
+    executor.start_polling(dp, skip_updates=False)  # проверка обновлений (когда бот был выключен)
+    # skip_updates=False - бот обработает сообщения, которые появились в чате за время его бездействия.
+    # skip_updates=True - бот проигнорирует сообщения, которые появились в чате за время его бездействия
