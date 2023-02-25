@@ -27,12 +27,23 @@
 # перейдите в Bot Settings → Group Privacy
 # Выберите Turn off
 # Должна появиться фраза Privacy mode is disabled for Bot
+# chat_id=message.chat.id   "=id чата, куда пришло сообщение"
 
 from aiogram import Bot, Dispatcher, executor, types
 from config import TOKEN_API
 
 bot = Bot(TOKEN_API)
 dp = Dispatcher(bot)
+
+
+@dp.message_handler()
+async def send_hello(message: types.Message):
+    """
+    Бот на bot.send_message() - отправляет пользователю HELLO:
+    в чат - если пользователь написал в чат
+    в личку - если пользователь написал боту
+    """
+    await bot.send_message(chat_id=message.chat.id, text='HELLO')  # =id чата, куда пришло сообщение
 
 
 @dp.message_handler()
