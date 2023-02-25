@@ -37,6 +37,11 @@ dp = Dispatcher(bot)
 
 @dp.message_handler()
 async def echo(message: types.Message):
+    """
+    Эхо бот на message.answer() - отправляет пользователю его же текст:
+    в чат - если пользователь написал в чат
+    в личку - если пользователь написал боту
+    """
     await message.answer(message.text)
 
 
