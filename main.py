@@ -60,7 +60,7 @@ async def help_command(message: types.Message):
 @dp.message_handler(commands=['картинка'])
 async def send_image(message: types.Message):
     """
-    По команде загружает картинку из файла и посылает ее в группу или личку
+    По команде загружает картинку из файла и посылает ее в группу или личку, сообщение пользователя - удаляет
     :param message: /картинка
     :return:
     """
@@ -70,6 +70,20 @@ async def send_image(message: types.Message):
             file = open('photos/' + files, 'rb')
     await bot.send_photo(chat_id=message.chat.id,
                          photo=file)
+    await message.delete()
+
+
+@dp.message_handler(commands=['location'])
+async def send_point(message: types.Message):
+    """
+    Позволяет отправлять местоположение
+    :param message: /location
+    :return: картинка GoogleMap - точка на карте
+    """
+    await bot.send_location(chat_id=message.from_user.id,
+                            latitude=68.97,
+                            longitude=33.09)
+    await message.delete()
 
 
 @dp.message_handler()
