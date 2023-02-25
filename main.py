@@ -30,9 +30,11 @@
 # chat_id=message.chat.id       "=id чата, куда пришло сообщение"
 # chat_id=message.from_user.id  "=id чата пользователя, приславшего сообщение"
 # (commands=['картинка'])- команды могут быть написаны и на кириллице
+# import os  # позволяет загрузить картинку
 
 from aiogram import Bot, Dispatcher, executor, types
 from config import TOKEN_API
+import os  # позволяет загрузить картинку
 
 HELP_COMMAND = """
 <b>/help</b> - <em>основные команды</em>
@@ -53,6 +55,21 @@ async def help_command(message: types.Message):
                            text=HELP_COMMAND,
                            parse_mode='HTML')
     await message.delete()
+
+
+@dp.message_handler(commands=['картинка'])
+async def send_image(message: types.Message):
+    """
+    По команде загружает картинку из файла и посылает ее в группу или личку
+    :param message: /картинка
+    :return:
+    """
+    # загружаем картинку
+    for files in os.listdir('photos/'):
+        if files.split('.')[-1] == 'jpg':
+            file = open('photos/' + files, 'rb')
+    await bot.send_photo(chat_id=message.chat.id,
+                         photo=file)
 
 
 @dp.message_handler()
