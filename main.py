@@ -42,6 +42,7 @@ HELP_COMMAND = """
 <b>/help</b> - <em>основные команды</em>
 <b>/картинка</b> - <em>прислать картинку</em>
 """
+
 bot = Bot(TOKEN_API)
 dp = Dispatcher(bot)
 
@@ -114,6 +115,6 @@ async def echo(message: types.Message):
 
 
 if __name__ == "__main__":
-    executor.start_polling(dp, skip_updates=False)  # проверка обновлений (когда бот был выключен)
+    executor.start_polling(dp, skip_updates=False)  # skip_updates - проверка обновлений (когда бот был выключен)
     # skip_updates=False - бот обработает сообщения, которые появились в чате за время его бездействия.
     # skip_updates=True - бот проигнорирует сообщения, которые появились в чате за время его бездействия
